@@ -1,0 +1,4 @@
+[flake8]
+ignore = F401
+exclude = .git,__pycache__,venv,migrations,settings.py,ckeditor_config.py
+max-complexity = 10

@@ -7,17 +7,20 @@ import qrcode
 
 def generate_string(num=50):
     letters = string.ascii_letters + string.punctuation + string.digits
-    some_string = "".join(random.sample(letters, num))    
+    some_string = "".join(random.sample(letters, num))
     return some_string
+
 
 def qr_image(some_string):
     filename = str(input('Enter filename of qr file>> ')) + '.png'
-    image = qrcode.make(some_string)    
+    image = qrcode.make(some_string)
     image.save(filename)
     print(f"Image successfully saved with filename: {filename}")
 
+
 if __name__ == '__main__':
-    var = str(input('Enter 1 to generate random string or 2 to enter your string >> '))
+    var = str(input(
+        'Enter 1 to generate random string or 2 to enter your string >> '))
     if var == '1':
         some_string = generate_string()
     elif var == '2':
