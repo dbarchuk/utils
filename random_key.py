@@ -3,7 +3,7 @@ import random
 from sys import argv
 
 
-def generate_random_string(num):
+def generate_random_string(num=None):
     err = "You should input digit, but okay, i will set 50 symbols for you:"
     letters = string.ascii_letters + string.punctuation + string.digits
     if len(argv) == 1:

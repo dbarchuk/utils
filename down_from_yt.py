@@ -24,6 +24,8 @@ def get_video_from_yt(url: str, filename=None):
 
     if not filename:
         filename = slugify(yt.title[:100]).lower() + '.mp4'
+    else:
+        filename += '.mp4'
 
     # processing thumbs
     thumb_url = yt.thumbnail_url
