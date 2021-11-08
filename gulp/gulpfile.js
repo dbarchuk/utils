@@ -1,6 +1,6 @@
 const {src, dest, watch, series} = require('gulp')
 const plumber = require('gulp-plumber')
-const sourcemaps = require('gulp-sourcemaps')
+const srcmaps = require('gulp-sourcemaps')
 const sass = require('gulp-sass')(require('sass'))
 const autoprefixer = require('gulp-autoprefixer')
 const rename = require('gulp-rename')
@@ -15,24 +15,24 @@ const del = require('del')
 
 
 function html () {
-    return src('source/*.html')
+    return src('src/*.html')
         .pipe(dest('build/'))
 }
 
 function css () {
-    return src('source/scss/style.scss')
+    return src('src/scss/style.scss')
         .pipe(plumber())
-        .pipe(sourcemaps.init())
+        .pipe(srcmaps.init())
         .pipe(sass())
         .pipe(autoprefixer())
         .pipe(csso())
         .pipe(rename('style.min.css'))
-        .pipe(sourcemaps.write('./'))
+        .pipe(srcmaps.write('./'))
         .pipe(dest('build/css/'))
 }
 
 function cssNoMin () {
-    return src('source/scss/style.scss')
+    return src('src/scss/style.scss')
         .pipe(plumber())
         .pipe(sass())
         .pipe(autoprefixer())                
@@ -47,8 +47,8 @@ function serve () {
         cors: true,
         ui: false
     })
-    watch('source/scss/**/*.scss', series (css, cssNoMin, refresh))
-    watch('source/*.html', series(html, refresh))
+    watch('src/scss/**/*.scss', series (css, cssNoMin, refresh))
+    watch('src/*.html', series(html, refresh))
 }
 
 function refresh (done) {
@@ -57,7 +57,7 @@ function refresh (done) {
 }
 
 function images () {
-    return src('source/img/**/*.{png,jpg,jpeg}')
+    return src('src/img/**/*.{png,jpg,jpeg}')
         .pipe(imagemin([
             imagemin.optipng({optimizationLevel: 3}),
             imagemin.mozjpeg({progressive: true})   
@@ -65,7 +65,7 @@ function images () {
 }
 
 function sprite () {
-    return src('source/img/icon-*.svg')
+    return src('src/img/icon-*.svg')
         .pipe(imagemin([imagemin.svgo()]))
         .pipe(svgstore({
                 inlineSvg: true
@@ -77,10 +77,10 @@ function sprite () {
 
 function js () {
     return pipeline(
-        src('source/js/*.js'),
-        sourcemaps.init(),
+        src('src/js/*.js'),
+        srcmaps.init(),
         uglify(),
-        sourcemaps.write('.'),
+        srcmaps.write('.'),
         rename({suffix: '.min'}),
         dest('build/js')
     )
@@ -88,10 +88,10 @@ function js () {
 
 function copy () {
     return src([
-        "source/fonts/**/*",
-        "source/*.ico",
+        "src/fonts/**/*",
+        "src/*.ico",
     ], {
-        base: "source"
+        base: "src"
     })
     .pipe(dest('build'))
 }
